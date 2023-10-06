@@ -1,15 +1,16 @@
 def solution(sizes):
-    new_sizes = []
-    for i in sizes:
-        i = sorted(i)
-        new_sizes.append(i)
-        
-    max_w, max_h = 0, 0
-    for i,j in new_sizes:
-        max_w = max(max_w, i)
-        max_h = max(max_h, j)
-        
-    return max_w*max_h
-    
-        
-    
+    answer = 0
+    w = 0
+    h = 0
+    for i, j in sizes:
+        if i > j:
+            w = max(w, i)
+        else:
+            w = max(w, j)
+        if i < j:
+            h = max(h, i)
+        else:
+            h = max(h, j)
+    answer = w * h
+
+    return answer
