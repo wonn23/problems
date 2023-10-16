@@ -1,13 +1,15 @@
 from itertools import permutations
 def solution(k, dungeons):
-    answer = 0
-    dungeons_list = list(permutations(dungeons,len(dungeons)))
-    for dungeon in dungeons_list:
-        max_dungeons = 0
-        current_fatigue = k
-        for min_fatigue, consume_fatigue in dungeon:
-            if current_fatigue >= min_fatigue:
-                current_fatigue -= consume_fatigue
-                max_dungeons += 1
-        answer = max(answer, max_dungeons)
-    return answer
+    perm_dungeons = list(permutations(dungeons,len(dungeons)))
+    
+    answer = []
+    for dungeon in perm_dungeons:
+        count = 0
+        current_f = k
+        for min_f, consume_f in dungeon:
+            if current_f >= min_f:
+                current_f -= consume_f
+                count += 1
+        answer.append(count)
+        
+    return max(answer)
