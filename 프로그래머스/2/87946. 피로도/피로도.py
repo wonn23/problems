@@ -2,7 +2,7 @@ from itertools import permutations
 def solution(k, dungeons):
     perm_dungeons = list(permutations(dungeons,len(dungeons)))
     
-    answer = []
+    answer = 0
     for dungeon in perm_dungeons:
         count = 0
         current_f = k
@@ -10,6 +10,6 @@ def solution(k, dungeons):
             if current_f >= min_f:
                 current_f -= consume_f
                 count += 1
-        answer.append(count)
+        answer = max(answer, count)
         
-    return max(answer)
+    return answer
