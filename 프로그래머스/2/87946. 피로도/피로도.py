@@ -11,5 +11,6 @@ def solution(k, dungeons):
                 current_f -= consume_f
                 count += 1
         answer = max(answer, count)
-        
+        if answer == len(dungeons):
+            return answer
     return answer
