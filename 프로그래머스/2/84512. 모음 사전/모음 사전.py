@@ -13,10 +13,7 @@ def solution(word):
     # 정리된 값들
     cleaned_values = []
     for i in sorted_vowels:
-        if len(i) > 1:
-            cleaned_values.append(''.join(i))
-        else:
-            cleaned_values.append(i[0])
+        cleaned_values.append(''.join(i))
     # cleaned_values = [''.join(item) if len(item) > 1 else item[0] for item in sorted_vowels]
 
     
