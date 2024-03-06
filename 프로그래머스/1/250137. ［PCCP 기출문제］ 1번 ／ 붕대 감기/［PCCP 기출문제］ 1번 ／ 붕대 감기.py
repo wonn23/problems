@@ -15,9 +15,9 @@ def solution(bandage, health, attacks):
             continue_success = 0
         else:
             attack = False
-            current_health += heal_per_second
+            current_health += heal_per_second # 초당 회복
             if continue_success == casting_time:
-                current_health += plus_heal
+                current_health += plus_heal # 추가 회복
                 continue_success = 0
             if current_health > health:
                 current_health = health # 체력 보정
