@@ -3,16 +3,18 @@ import sys
 
 input = sys.stdin.read
 
-def calculate_chicken_distance(homes, chicken_stores):
+
+def calculate_chicken_distanse(homes, chicken_stores):
     total_distance = 0
     for hx, hy in homes:
-        min_distance = float('inf')
+        min_distance = float("inf")
         for cx, cy in chicken_stores:
             distance = abs(hx - cx) + abs(hy - cy)
             if distance < min_distance:
                 min_distance = distance
         total_distance += min_distance
     return total_distance
+
 
 def main():
     data = input().strip().split()
@@ -37,13 +39,14 @@ def main():
             elif matrix[i][j] == 2:
                 chicken_stores.append((i + 1, j + 1))
 
-    min_chicken_distance = float('inf')
+    min_chicken_distance = float("inf")
     for chicken_comb in combinations(chicken_stores, m):
-        current_distance = calculate_chicken_distance(homes, chicken_comb)
-        if current_distance < min_chicken_distance:
-            min_chicken_distance = current_distance
+        chicken_distance = calculate_chicken_distanse(homes, chicken_comb)
+        if chicken_distance < min_chicken_distance:
+            min_chicken_distance = chicken_distance
 
     print(min_chicken_distance)
+
 
 if __name__ == "__main__":
     main()
