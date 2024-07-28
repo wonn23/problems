@@ -1,48 +1,43 @@
 import sys
-from itertools import permutations
 
 input = sys.stdin.readline
 
-n = int(input())
-num_list = list(map(int, input().split()))
-calcul_list = list(map(int, input().split()))
+# 입력 받기
+n = int(input().strip())
+num_list = list(map(int, input().strip().split()))
+add, sub, mul, div = map(int, input().strip().split())
 
-INF = int(10e9)
+# 최대값, 최소값 초기화
+max_value = -int(1e9)
+min_value = int(1e9)
 
-# calcul_list를 0,1,2,3으로 나타내기
-perm_list = []
-for i in range(4):
-    # if calcul_list[i] >= 1:
-    #     for _ in range(calcul_list[i]):
-    #         perm_list.append(i)
-    perm_list.extend([i] * calcul_list[i])
+# 백트래킹 함수 정의
+def backtrack(index, current_value, add, sub, mul, div):
+    global max_value, min_value
 
+    # 모든 숫자를 사용한 경우
+    if index == n:
+        max_value = max(max_value, current_value)
+        min_value = min(min_value, current_value)
+        return
 
-def solution(perm):
-    result = num_list[0]
-    for i in range(1, n):
-        if perm[i - 1] == 0:
-            result += num_list[i]
-        elif perm[i - 1] == 1:
-            result -= num_list[i]
-        elif perm[i - 1] == 2:
-            result *= num_list[i]
-        elif perm[i - 1] == 3:
-            # 나누는 값이 음수인 경우를 생각해줘야함
-            if result < 0 and num_list[i] > 0:
-                result = -(-result // num_list[i])
-            else:
-                result //= num_list[i]
-    return result
+    # 가능한 연산자들을 각각 적용해보기
+    if add > 0:
+        backtrack(index + 1, current_value + num_list[index], add - 1, sub, mul, div)
+    if sub > 0:
+        backtrack(index + 1, current_value - num_list[index], add, sub - 1, mul, div)
+    if mul > 0:
+        backtrack(index + 1, current_value * num_list[index], add, sub, mul - 1, div)
+    if div > 0:
+        # 나눗셈의 경우 음수 처리를 위해 별도 처리
+        if current_value < 0:
+            backtrack(index + 1, -(-current_value // num_list[index]), add, sub, mul, div - 1)
+        else:
+            backtrack(index + 1, current_value // num_list[index], add, sub, mul, div - 1)
 
+# 백트래킹 시작
+backtrack(1, num_list[0], add, sub, mul, div)
 
-max_value = -INF
-min_value = INF
-
-for perm in set(permutations(perm_list)):
-    result = solution(perm)
-    max_value = max(max_value, result)
-    min_value = min(min_value, result)
-
+# 결과 출력
 print(max_value)
 print(min_value)
